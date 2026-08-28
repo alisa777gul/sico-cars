@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 import {
   Car, Gauge, Fuel, Calendar, Cog, ArrowRight, ChevronLeft, ChevronRight,
   Phone, Mail, MapPin, Clock, Menu, X, Youtube, Navigation, Check, Plus,
@@ -38,6 +39,12 @@ export const monthlyFrom = (price, months = 72) => {
   return isFinite(m) && m > 0 ? Math.round(m) : null
 }
 export const FUEL_LABEL = { diesel: 'Diesel', 'benzín': 'Benzín', elektro: 'Elektro', hybrid: 'Hybrid' }
+export const carHref = (c) => `/vozidlo/${c.id}`
+export const ytEmbed = (url) => {
+  if (!url) return null
+  const m = url.match(/(?:youtu\.be\/|v=)([\w-]{6,})/)
+  return m ? `https://www.youtube.com/embed/${m[1]}` : null
+}
 
 /* ---------- data hook ---------- */
 export function useCars() {
@@ -66,8 +73,8 @@ export function Tilt({ children, className = '', max = 6 }) {
   }
   const reset = () => setT({ rx: 0, ry: 0 })
   return (
-    <div ref={ref} onMouseMove={onMove} onMouseLeave={reset} className={`perspective-1000 ${className}`}>
-      <div className="preserve-3d transition-transform duration-300 ease-out" style={{ transform: `rotateX(${t.rx}deg) rotateY(${t.ry}deg)` }}>
+    <div ref={ref} onMouseMove={onMove} onMouseLeave={reset} className={`h-full w-full max-w-full perspective-1000 ${className}`}>
+      <div className="h-full preserve-3d transition-transform duration-300 ease-out" style={{ transform: `rotateX(${t.rx}deg) rotateY(${t.ry}deg)` }}>
         {children}
       </div>
     </div>
@@ -216,9 +223,9 @@ export function Hero({ heroCar, onOpenCar }) {
                       <div className="font-display text-xl truncate">{heroCar.name}</div>
                       <div className="mt-1 font-display text-lg text-[#C4A667]">{priceLabel(heroCar)}</div>
                     </div>
-                    <button onClick={() => onOpenCar(heroCar)} className="shrink-0 grid place-items-center h-11 w-11 border border-[#C4A667]/50 text-[#C4A667] hover:bg-[#C4A667] hover:text-[#0E1A14] transition rounded-full">
+                    <a href={carHref(heroCar)} className="shrink-0 grid place-items-center h-11 w-11 border border-[#C4A667]/50 text-[#C4A667] hover:bg-[#C4A667] hover:text-[#0E1A14] transition rounded-full">
                       <Plus className="h-5 w-5" />
-                    </button>
+                    </a>
                   </div>
                 </div>
               </Tilt>
@@ -277,6 +284,7 @@ export function Services() {
 
 /* ================= COVERFLOW ================= */
 export function Coverflow({ cars, onOpenCar }) {
+  const router = useRouter()
   const [active, setActive] = useState(0)
   const n = cars.length
   const go = (d) => setActive((a) => (a + d + n) % n)
@@ -306,7 +314,7 @@ export function Coverflow({ cars, onOpenCar }) {
             }
             return (
               <div key={car.id} className="absolute inset-0 mx-auto w-[290px] md:w-[420px] transition-all duration-500 ease-out" style={style}>
-                <button onClick={() => (isActive ? onOpenCar(car) : setActive(i))}
+                <a href={carHref(car)} onClick={(e) => { if (!isActive) { e.preventDefault(); setActive(i) } }}
                   className={`block w-full text-left bg-[#13211A] border ${isActive ? 'border-[#C4A667]' : 'border-[#EFEAD9]/15'}`}
                   style={{ boxShadow: isActive ? '0 30px 70px -25px rgba(196,166,103,0.4)' : '0 20px 50px -25px rgba(0,0,0,0.8)' }}>
                   <div className="relative">
@@ -321,7 +329,7 @@ export function Coverflow({ cars, onOpenCar }) {
                     </div>
                     <div className="font-display text-lg text-[#C4A667] whitespace-nowrap ml-3">{priceLabel(car)}</div>
                   </div>
-                </button>
+                </a>
               </div>
             )
           })}
@@ -347,7 +355,7 @@ export function Coverflow({ cars, onOpenCar }) {
 export function CarCard({ car, onOpenCar }) {
   return (
     <Tilt max={5}>
-      <button onClick={() => onOpenCar(car)} className="group block w-full h-full text-left bg-[#13211A] border border-[#EFEAD9]/12 hover:border-[#C4A667]/60 transition duration-300">
+      <a href={carHref(car)} className="group block w-full h-full text-left bg-[#13211A] border border-[#EFEAD9]/12 hover:border-[#C4A667]/60 transition duration-300">
         <div className="relative overflow-hidden">
           <img src={media(car.image, 640, 420)} alt={`${car.brand} ${car.name}`} className="w-full h-52 object-cover transition duration-700 group-hover:scale-105" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0E1A14]/50 to-transparent opacity-0 group-hover:opacity-100 transition" />
@@ -371,7 +379,7 @@ export function CarCard({ car, onOpenCar }) {
             <span className="grid place-items-center h-10 w-10 border border-[#C4A667]/50 text-[#C4A667] group-hover:bg-[#C4A667] group-hover:text-[#0E1A14] transition rounded-full"><Plus className="h-4 w-4" /></span>
           </div>
         </div>
-      </button>
+      </a>
     </Tilt>
   )
 }
@@ -420,7 +428,7 @@ export function Inventory({ cars, onOpenCar, showHeader = true }) {
           </div>
         </div>
         <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((car) => <CarCard key={car.id} car={car} onOpenCar={onOpenCar} />)}
+          {filtered.map((car) => <CarCard key={car.id} car={car} />)}
         </div>
         {filtered.length === 0 && <div className="mt-12 text-center text-[#8C948A]">Žiadne vozidlá pre zvolený filter.</div>}
       </div>
