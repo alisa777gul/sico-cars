@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 43 22% 90%;
+    --foreground: 45 14% 7%;
+    --card: 48 33% 97%;
+    --card-foreground: 45 14% 7%;
+    --popover: 48 33% 97%;
+    --popover-foreground: 45 14% 7%;
+    --primary: 45 14% 7%;
+    --primary-foreground: 43 22% 92%;
+    --secondary: 43 15% 85%;
+    --secondary-foreground: 45 14% 7%;
+    --muted: 43 15% 85%;
+    --muted-foreground: 40 6% 39%;
+    --accent: 14 100% 50%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 48%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 40 10% 80%;
+    --input: 40 10% 78%;
+    --ring: 14 100% 50%;
+    --radius: 0.25rem;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Archivo', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, .font-display {
+    font-family: 'Anton', 'Archivo', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+}
+
+@layer utilities {
+  .font-mono2 { font-family: 'Space Mono', monospace; }
+  .perspective-1000 { perspective: 1000px; }
+  .perspective-2000 { perspective: 2000px; }
+  .preserve-3d { transform-style: preserve-3d; }
+  .ink { background-color: #141310; color: #EDE9E0; }
+  .text-outline { -webkit-text-stroke: 2px #141310; color: transparent; }
+  .text-outline-accent { -webkit-text-stroke: 2px #FF3B00; color: transparent; }
+  .card-flat { background-color: #FBFAF6; border: 1px solid rgba(20,19,16,0.14); }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee { animation: marquee 30s linear infinite; }
+.animate-marquee-fast { animation: marquee 18s linear infinite; }
+
+/* subtle paper grain */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
