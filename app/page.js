@@ -20,7 +20,7 @@ export default function App() {
   const heroCar = featured[0] || cars[0]
 
   return (
-    <main className="min-h-screen bg-[#EDE9E0] text-[#141310] selection:bg-[#FF3B00] selection:text-white">
+    <main className="min-h-screen bg-[#0E1A14] text-[#EFEAD9] selection:bg-[#C4A667] selection:text-[#0E1A14]">
       <Navbar />
       <Hero heroCar={heroCar} onOpenCar={openCar} />
       <Ticker />

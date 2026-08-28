@@ -12,27 +12,27 @@ export default function PonukaPage() {
   const openCar = (car) => { setSelected(car); setOpen(true) }
 
   return (
-    <main className="min-h-screen bg-[#EDE9E0] text-[#141310] selection:bg-[#FF3B00] selection:text-white">
+    <main className="min-h-screen bg-[#0E1A14] text-[#EFEAD9] selection:bg-[#C4A667] selection:text-[#0E1A14]">
       <Navbar />
 
       {/* page header */}
-      <header className="pt-32 pb-10 border-b border-[#141310]/12">
+      <header className="pt-32 pb-10 border-b border-[#EFEAD9]/12">
         <div className="container mx-auto px-5 md:px-8 lg:px-12">
-          <a href="/" className="font-mono2 text-xs uppercase tracking-widest text-[#6B675E] hover:text-[#FF3B00]">← Späť na úvod</a>
-          <div className="mt-4 flex items-end justify-between gap-6 flex-wrap">
+          <a href="/" className="text-[11px] uppercase tracking-[0.25em] text-[#8C948A] hover:text-[#C4A667] transition">← Späť na úvod</a>
+          <div className="mt-5 flex items-end justify-between gap-6 flex-wrap">
             <div>
-              <span className="font-mono2 text-xs uppercase tracking-widest text-[#FF3B00]">01 / Kompletná ponuka</span>
-              <h1 className="mt-3 font-display uppercase text-6xl md:text-8xl leading-[0.9]">Ponuka<br />vozidiel</h1>
+              <span className="text-[11px] uppercase tracking-[0.35em] text-[#C4A667]"><span className="text-[#EFEAD9]/30 mr-3">01</span>Kompletná ponuka</span>
+              <h1 className="mt-4 font-display text-6xl md:text-8xl leading-[0.95]">Ponuka <span className="italic text-[#C4A667]">vozidiel</span></h1>
             </div>
-            <div className="font-mono2 text-sm text-[#6B675E]">
-              {loading ? '…' : `${cars.length}`} <span className="uppercase">vozidiel skladom</span>
+            <div className="text-[11px] uppercase tracking-[0.2em] text-[#8C948A]">
+              {loading ? '…' : `${cars.length}`} vozidiel skladom
             </div>
           </div>
         </div>
       </header>
 
       {loading ? (
-        <div className="py-24 text-center font-mono2 text-[#6B675E]">Načítavam vozidlá…</div>
+        <div className="py-24 text-center text-[#8C948A]">Načítavam vozidlá…</div>
       ) : (
         <Inventory cars={cars} onOpenCar={openCar} showHeader={false} />
       )}

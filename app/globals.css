@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,25 +6,25 @@
 
 @layer base {
   :root {
-    --background: 43 22% 90%;
-    --foreground: 45 14% 7%;
-    --card: 48 33% 97%;
-    --card-foreground: 45 14% 7%;
-    --popover: 48 33% 97%;
-    --popover-foreground: 45 14% 7%;
-    --primary: 45 14% 7%;
-    --primary-foreground: 43 22% 92%;
-    --secondary: 43 15% 85%;
-    --secondary-foreground: 45 14% 7%;
-    --muted: 43 15% 85%;
-    --muted-foreground: 40 6% 39%;
-    --accent: 14 100% 50%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84% 48%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 40 10% 80%;
-    --input: 40 10% 78%;
-    --ring: 14 100% 50%;
+    --background: 150 30% 8%;
+    --foreground: 46 40% 89%;
+    --card: 150 27% 10%;
+    --card-foreground: 46 40% 89%;
+    --popover: 152 32% 6%;
+    --popover-foreground: 46 40% 89%;
+    --primary: 41 44% 59%;
+    --primary-foreground: 150 30% 8%;
+    --secondary: 150 15% 15%;
+    --secondary-foreground: 46 40% 89%;
+    --muted: 150 15% 15%;
+    --muted-foreground: 130 5% 56%;
+    --accent: 41 44% 59%;
+    --accent-foreground: 150 30% 8%;
+    --destructive: 0 45% 42%;
+    --destructive-foreground: 46 40% 89%;
+    --border: 150 12% 20%;
+    --input: 150 12% 20%;
+    --ring: 41 44% 59%;
     --radius: 0.25rem;
   }
 }
@@ -33,26 +33,30 @@
   * { @apply border-border; }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Archivo', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    font-weight: 300;
   }
   h1, h2, h3, .font-display {
-    font-family: 'Anton', 'Archivo', sans-serif;
-    font-weight: 400;
-    letter-spacing: 0.01em;
+    font-family: 'Playfair Display', Georgia, serif;
   }
 }
 
 @layer utilities {
-  .font-mono2 { font-family: 'Space Mono', monospace; }
+  .font-display { font-family: 'Playfair Display', Georgia, serif; }
   .perspective-1000 { perspective: 1000px; }
   .perspective-2000 { perspective: 2000px; }
   .preserve-3d { transform-style: preserve-3d; }
-  .ink { background-color: #141310; color: #EDE9E0; }
-  .text-outline { -webkit-text-stroke: 2px #141310; color: transparent; }
-  .text-outline-accent { -webkit-text-stroke: 2px #FF3B00; color: transparent; }
-  .card-flat { background-color: #FBFAF6; border: 1px solid rgba(20,19,16,0.14); }
+  .text-gold { color: #C4A667; }
+  .bg-gold { background-color: #C4A667; }
+  .border-gold { border-color: #C4A667; }
+  .gold-gradient {
+    background: linear-gradient(90deg, #E8D4A0, #C4A667 45%, #9C7E45);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
   .scrollbar-hide::-webkit-scrollbar { display: none; }
   .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 }
@@ -61,16 +65,16 @@
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
-.animate-marquee { animation: marquee 30s linear infinite; }
-.animate-marquee-fast { animation: marquee 18s linear infinite; }
+.animate-marquee { animation: marquee 34s linear infinite; }
+.animate-marquee-fast { animation: marquee 22s linear infinite; }
 
-/* subtle paper grain */
+/* subtle grain */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 1;
-  opacity: 0.035;
+  opacity: 0.05;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
